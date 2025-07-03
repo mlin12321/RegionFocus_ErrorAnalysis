@@ -4,4 +4,86 @@
 
 [Tiange Luo](https://tiangeluo.github.io/), [Lajanugen Logeswaran](https://lajanugen.github.io/), [Justin Johnson](https://web.eecs.umich.edu/~justincj) [Honglak Lee](https://web.eecs.umich.edu/~honglak/)
 
-We plan to release the ScreenSpot-Pro code for both UI-TARS and Qwen2.5-VL soon, followed by WebVoyager at a later date. Stay tuned.
+We first release our ScreenSpot-Pro code for both UI-TARS and Qwen2.5-VL. All hyperparameters and prompts are not carefully tuned. We plan to release the WebVoyager code at a later date.
+
+## ScreenSpot-Pro
+
+Please first download the data from ScreenSpot-Pro [Hugging Face](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro/tree/main) and launch inference servers for different models (commands are listed below; the model names and ports have already been mapped inside the code). Then, run `bash run_ss_pro_xxx.sh`.
+
+<details>
+<summary>Command for launching UI-TARS-72B</summary>
+
+```bash
+HUGGINGFACE_PATH='the local directory to cache Hugging Face models'
+HF_TOKEN='your_HF_token'
+docker run --runtime nvidia --gpus '"device=0,1,2,3,4,5,6,7"' --ipc=host \
+  -p 8100:8100 \
+  --env "HUGGING_FACE_HUB_TOKEN=${HF_TOKEN}" \
+  --env "TORCH_USE_CUDA_DSA=1" \
+  --env "CUDA_LAUNCH_BLOCKING=1" \
+  -v $HUGGINGFACE_PATH:/root/.cache/huggingface \
+  vllm/vllm-openai:v0.6.6 \
+  --max-model-len 16384 \
+  --max-num-seqs 256 \
+  --gpu_memory_utilization 0.9 \
+  --model bytedance-research/UI-TARS-72B-DPO \
+  --tensor-parallel-size 8 \
+  --enforce-eager \
+  --limit-mm-per-prompt image=5 \
+  --port 8100
+```
+</details>
+
+
+<details>
+<summary>Command for launching UI-TARS-7B</summary>
+
+```bash
+HUGGINGFACE_PATH='the local directory to cache Hugging Face models'
+HF_TOKEN='your_HF_token'
+docker run --runtime nvidia --gpus '"device=0,1,2,3"' --ipc=host \
+  -p 8200:8200 \
+  --env "HUGGING_FACE_HUB_TOKEN=${HF_TOKEN}" \
+  --env "TORCH_USE_CUDA_DSA=1" \
+  -v $HUGGINGFACE_PATH:/root/.cache/huggingface \
+  vllm/vllm-openai:v0.6.6 \
+  --max-model-len 16384 \
+  --max-num-seqs 2048 \
+  --gpu_memory_utilization 0.9 \
+  --model bytedance-research/UI-TARS-7B-DPO \
+  --tensor-parallel-size 4 \
+  --limit-mm-per-prompt image=5 \
+  --dtype bfloat16 \
+  --port 8200
+```
+</details>
+
+
+<details>
+<summary>Commands for launching Qwen2.5-VL-72B & -7B</summary>
+
+Please first install https://github.com/QwenLM/Qwen-Agent and execute `mkdir -p ./qwen_utils && wget https://raw.githubusercontent.com/QwenLM/Qwen2.5-VL/main/cookbooks/utils/agent_function_call.py -O ./qwen_utils/agent_function_call.py`. 
+
+```bash
+export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+vllm serve Qwen/Qwen2.5-VL-72B-Instruct --port 8300  --dtype bfloat16   --limit-mm-per-prompt '{"images": 5}'   --tensor-parallel-size 8
+
+export CUDA_VISIBLE_DEVICES=0,1,2,3
+vllm serve Qwen/Qwen2.5-VL-7B-Instruct   --port 8400   --dtype bfloat16   --limit-mm-per-prompt '{"images": 5}'   --tensor-parallel-size 4
+```
+
+</details>
+
+
+## Citation Information
+
+If you find our code or paper useful, please consider citing:
+
+```
+@article{luo2025visual,
+      title={Visual Test-time Scaling for GUI Agent Grounding},
+      author={Luo, Tiange and Logeswaran, Lajanugen and Johnson, Justin and Lee, Honglak},
+      journal={arXiv preprint arXiv:2505.00684},
+      year={2025},
+}
+```
