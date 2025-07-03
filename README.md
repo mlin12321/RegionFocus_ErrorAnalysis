@@ -8,7 +8,9 @@ We first release our ScreenSpot-Pro code for both UI-TARS and Qwen2.5-VL. All hy
 
 ## ScreenSpot-Pro
 
-Please first download the data from ScreenSpot-Pro [Hugging Face](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro/tree/main) and launch inference servers for different models (commands are listed below; the model names and ports have already been mapped inside the code). Then, run `bash run_ss_pro_xxx.sh`.
+Please first download the data from ScreenSpot-Pro [Hugging Face](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro/tree/main) and put `images` and `annotations` under this directory. Then, launch inference servers for different models (commands are listed below; the model names and ports have already been mapped inside the code). Finally, run `bash run_ss_pro_xxx.sh`.
+
+You can turn on `--debug` inside `eval_screenspot_pro_RegionFocus.py` to save intermediate RegionFocus step images, such as adding image-as-map stars for judging, zoom-in, and projecting back to the original input.
 
 <details>
 <summary>Command for launching UI-TARS-72B</summary>
@@ -60,7 +62,7 @@ docker run --runtime nvidia --gpus '"device=0,1,2,3"' --ipc=host \
 
 
 <details>
-<summary>Commands for launching Qwen2.5-VL-72B & -7B</summary>
+<summary>Command for launching Qwen2.5-VL-72B & -7B</summary>
 
 Please first install https://github.com/QwenLM/Qwen-Agent and execute `mkdir -p ./qwen_utils && wget https://raw.githubusercontent.com/QwenLM/Qwen2.5-VL/main/cookbooks/utils/agent_function_call.py -O ./qwen_utils/agent_function_call.py`. 
 

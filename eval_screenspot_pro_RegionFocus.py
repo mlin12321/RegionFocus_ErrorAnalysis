@@ -32,6 +32,7 @@ def parse_args():
     parser.add_argument('--log_path', type=str, required=True)
     parser.add_argument('--checkpoint_path', type=str, default=None, help="Path to save/load checkpoint for resuming evaluation")
     parser.add_argument('--checkpoint_interval', type=int, default=10, help="Save checkpoint after every N samples")
+    parser.add_argument('--debug', action='store_true', help="Save intermediate RegionFocus debug images")
 
 
     args = parser.parse_args()
@@ -461,7 +462,7 @@ def main(args):
 
         try: 
             if sample["gt_type"] == "positive":
-                response = model.ground_with_regionfocus(instruction=sample["prompt_to_evaluate"], image=img_path, task_id=filename.replace('/', '_').replace('.png', ''))
+                response = model.ground_with_regionfocus(instruction=sample["prompt_to_evaluate"], image=img_path, task_id=filename.replace('/', '_').replace('.png', ''), debug=args.debug)
             elif sample["gt_type"] == "negative":
                 response = model.ground_allow_negative(instruction=sample["prompt_to_evaluate"], image=img_path)
         except Exception as e:
