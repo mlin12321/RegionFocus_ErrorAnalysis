@@ -8,9 +8,9 @@ We first release our ScreenSpot-Pro code for both UI-TARS and Qwen2.5-VL. All hy
 
 ## ScreenSpot-Pro
 
-Please first download the data from ScreenSpot-Pro [Hugging Face](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro/tree/main) and put `images` and `annotations` under this directory. Then, launch inference servers for different models (commands are listed below; the model names and ports have already been mapped inside the code). Finally, run `bash run_ss_pro_xxx.sh`.
+Please first download the data from ScreenSpot-Pro [Hugging Face](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro/tree/main) and put `images` and `annotations` folders under the same directory with code. Then, launch inference servers for different models (commands are listed below; the model names and ports have already been mapped inside the code). Finally, run `bash run_ss_pro_xxx.sh`.
 
-You can turn on `--debug` inside `eval_screenspot_pro_RegionFocus.py` to save intermediate RegionFocus step images, such as adding image-as-map stars for judging, zoom-in, and projecting back to the original input.
+You can turn on `--debug` inside `eval_screenspot_pro_RegionFocus.py` to save intermediate RegionFocus step images, such as image-as-map stars for judgment, zoom-ins, and projecting zoomed-in predictions back onto the original input.
 
 <details>
 <summary>Command for launching UI-TARS-72B</summary>
