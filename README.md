@@ -12,6 +12,11 @@ Please first download the data from ScreenSpot-Pro [Hugging Face](https://huggin
 
 You can turn on `--debug` inside `eval_screenspot_pro_RegionFocus.py` to save intermediate RegionFocus step images, such as image-as-map stars for judgment, zoom-ins, and projecting zoomed-in predictions back onto the original input.
 
+You can use `summarize_results.py` to output ScreenSpot-Pro results in a structure way: 
+```python
+python summarize_results.py results/uitars_RegionFocus.json results/qwen25vl_RegionFocus.json
+```
+
 <details>
 <summary>Command for launching UI-TARS-72B</summary>
 
