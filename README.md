@@ -10,12 +10,17 @@ We first release our ScreenSpot-Pro code for both UI-TARS and Qwen2.5-VL. All hy
 
 Please first download the data from ScreenSpot-Pro [Hugging Face](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro/tree/main) and put `images` and `annotations` folders under the same directory with code. Then, launch inference servers for different models (commands are listed below; the model names and ports have already been mapped inside the code). Finally, run `bash run_ss_pro_xxx.sh`.
 
-You can turn on `--debug` inside `eval_screenspot_pro_RegionFocus.py` to save intermediate RegionFocus step images, such as image-as-map stars for judgment, zoom-ins, and projecting zoomed-in predictions back onto the original input.
+You can use `summarize_results.py` to output ScreenSpot-Pro results in a structure way. 
+One Example:
+```bash
+python summarize_results.py results/qwen25vl_RegionFocus.json results/uitars_RegionFocus.json
 
-You can use `summarize_results.py` to output ScreenSpot-Pro results in a structure way: 
-```python
-python summarize_results.py results/uitars_RegionFocus.json results/qwen25vl_RegionFocus.json
+# output: 
+# results/qwen25vl_RegionFocus.json 76.0 & 26.2 & 51.8 & 75.8 & 30.8 & 56.9 & 72.1 & 28.1 & 61.3 & 86.8 & 37.3 & 65.4 & 86.4 & 60.4 & 80.4 & 74.8 & 38.2 & 58.2 & 78.5 & 34.3 & 61.6 1581
+# results/uitars_RegionFocus.json ...
 ```
+
+You can turn on `--debug` inside `eval_screenspot_pro_RegionFocus.py` to save intermediate RegionFocus step images, such as image-as-map stars for judgment, zoom-ins, and projecting zoomed-in predictions back onto the original input.
 
 <details>
 <summary>Command for launching UI-TARS-72B & -7B</summary>
