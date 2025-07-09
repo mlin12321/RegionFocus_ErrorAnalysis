@@ -18,7 +18,7 @@ python summarize_results.py results/uitars_RegionFocus.json results/qwen25vl_Reg
 ```
 
 <details>
-<summary>Command for launching UI-TARS-72B</summary>
+<summary>Command for launching UI-TARS-72B & -7B</summary>
 
 ```bash
 HUGGINGFACE_PATH='the local directory to cache Hugging Face models'
@@ -39,11 +39,6 @@ docker run --runtime nvidia --gpus '"device=0,1,2,3,4,5,6,7"' --ipc=host \
   --limit-mm-per-prompt image=5 \
   --port 8100
 ```
-</details>
-
-
-<details>
-<summary>Command for launching UI-TARS-7B</summary>
 
 ```bash
 HUGGINGFACE_PATH='the local directory to cache Hugging Face models'

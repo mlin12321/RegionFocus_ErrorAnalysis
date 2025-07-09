@@ -14,7 +14,7 @@ import cv2
 import io
 import math
 from PIL import Image, ImageDraw
-from openai import OpenAI 
+from openai import OpenAI
 
 from qwen_agent.llm.fncall_prompts.nous_fncall_prompt import (
     NousFnCallPrompt,

@@ -9,7 +9,6 @@ import os
 from PIL import Image
 import logging
 from tqdm import tqdm
-from IPython import embed
 import random
 
 logging.basicConfig(level=logging.INFO)
@@ -462,7 +461,7 @@ def main(args):
 
         try: 
             if sample["gt_type"] == "positive":
-                response = model.ground_with_regionfocus(instruction=sample["prompt_to_evaluate"], image=img_path, task_id=filename.replace('/', '_').replace('.png', ''), debug=args.debug)
+                response = model.ground_with_regionfocus(instruction=sample["prompt_to_evaluate"], image=img_path, task_id=filename.replace('/', '_').replace('.png', ''))
             elif sample["gt_type"] == "negative":
                 response = model.ground_allow_negative(instruction=sample["prompt_to_evaluate"], image=img_path)
         except Exception as e:
