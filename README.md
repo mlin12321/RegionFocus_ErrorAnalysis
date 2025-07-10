@@ -69,7 +69,7 @@ docker run --runtime nvidia --gpus '"device=0,1,2,3"' --ipc=host \
 <details>
 <summary>Command for launching Qwen2.5-VL-72B & -7B</summary>
 
-Please first install https://github.com/QwenLM/Qwen-Agent and execute `mkdir -p ./qwen_utils && wget https://raw.githubusercontent.com/QwenLM/Qwen2.5-VL/main/cookbooks/utils/agent_function_call.py -O ./qwen_utils/agent_function_call.py`. 
+Please first install https://github.com/QwenLM/Qwen-Agent. 
 
 ```bash
 export CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
