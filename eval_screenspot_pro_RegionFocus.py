@@ -461,7 +461,7 @@ def main(args):
 
         try: 
             if sample["gt_type"] == "positive":
-                response = model.ground_with_regionfocus(instruction=sample["prompt_to_evaluate"], image=img_path, task_id=filename.replace('/', '_').replace('.png', ''))
+                response = model.ground_with_regionfocus(instruction=sample["prompt_to_evaluate"], image=img_path, task_id=filename.replace('/', '_').replace('.png', ''), debug=args.debug)
             elif sample["gt_type"] == "negative":
                 response = model.ground_allow_negative(instruction=sample["prompt_to_evaluate"], image=img_path)
         except Exception as e:

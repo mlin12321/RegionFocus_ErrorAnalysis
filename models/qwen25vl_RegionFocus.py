@@ -22,7 +22,7 @@ from qwen_agent.llm.fncall_prompts.nous_fncall_prompt import (
     ContentItem,
 )
 from transformers.models.qwen2_vl.image_processing_qwen2_vl_fast import smart_resize
-from qwen_utils.agent_function_call import ComputerUse
+from qwen_utils_agent_function_call import ComputerUse
 
 
 from PIL import Image, ImageDraw, ImageColor
