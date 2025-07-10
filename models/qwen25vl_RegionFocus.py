@@ -963,7 +963,6 @@ class Qwen25VLModel():
         return points[0], response + "\n(No valid selection found, using first point as fallback.)"
 
     def ground_with_regionfocus(self, instruction, image, debug=False, task_id=None):
-    # def ground_with_regionfocus(self, instruction, image, debug=True, task_id=None):
         """
         Main method that performs initial grounding, then applies RegionFocus if needed.
         
