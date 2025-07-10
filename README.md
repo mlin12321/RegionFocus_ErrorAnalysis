@@ -10,7 +10,7 @@ We first release our ScreenSpot-Pro code for both UI-TARS and Qwen2.5-VL. All hy
 
 Please first download the data from ScreenSpot-Pro [Hugging Face](https://huggingface.co/datasets/likaixin/ScreenSpot-Pro/tree/main) and put `images` and `annotations` folders under the same directory with code. Then, launch inference servers for different models (commands are listed below; the model names and ports have already been mapped inside the code). Finally, run `bash run_ss_pro_xxx.sh`.
 
-You can use `summarize_results.py` to output ScreenSpot-Pro results in a structure way. 
+You can use `summarize_results.py` to output ScreenSpot-Pro results categorically, following the order presented in our Table 1.
 One Example:
 ```bash
 python summarize_results.py results/qwen25vl_RegionFocus.json results/uitars_RegionFocus.json
