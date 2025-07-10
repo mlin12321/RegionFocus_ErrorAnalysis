@@ -24,6 +24,7 @@ You can turn on `--debug` inside `eval_screenspot_pro_RegionFocus.py` to save in
 
 <details>
 <summary>Command for launching UI-TARS-72B & -7B</summary>
+  
 Please first set up your `HUGGINGFACE_PATH` and `HF_TOKEN` in the below commands.
 
 ```bash
