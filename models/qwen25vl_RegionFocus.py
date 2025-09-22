@@ -266,7 +266,7 @@ class Qwen25VLModel():
     def __init__(self, 
                  base_url="http://localhost:8300/v1",
                  api_key="empty",
-                 model_name="Qwen/Qwen2.5-VL-72B-Instruct"):
+                 model_name="Qwen/Qwen2.5-VL-72B-Instruct-AWQ"):
         """
         Initialize the client that calls your remote model.
         :param base_url: The URL of your inference endpoint
