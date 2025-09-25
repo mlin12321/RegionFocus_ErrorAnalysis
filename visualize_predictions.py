@@ -197,7 +197,7 @@ def get_debug_folder_name(img_path):
 
 def copy_debug_files(debug_base_path, debug_folder_name, output_folder):
     """
-    Copy judgment_response.txt and aggregation_response.txt from debug folder if they exist
+    Copy all files from debug folder to output folder
     
     Args:
         debug_base_path: Base path to debug folder
@@ -213,20 +213,18 @@ def copy_debug_files(debug_base_path, debug_folder_name, output_folder):
     if not os.path.exists(debug_folder_path):
         return 0, f"Debug folder not found: {debug_folder_path}"
     
-    # Copy judgment_response.txt if it exists
-    judgment_file = os.path.join(debug_folder_path, "judgment_response.txt")
-    if os.path.exists(judgment_file):
-        shutil.copy2(judgment_file, output_folder)
-        copied_files.append("judgment_response.txt")
-    
-    # Copy aggregation_response.txt if it exists
-    aggregation_file = os.path.join(debug_folder_path, "aggregation_response.txt")
-    if os.path.exists(aggregation_file):
-        shutil.copy2(aggregation_file, output_folder)
-        copied_files.append("aggregation_response.txt")
+    # Copy all files from debug folder
+    try:
+        for filename in os.listdir(debug_folder_path):
+            source_file = os.path.join(debug_folder_path, filename)
+            if os.path.isfile(source_file):
+                shutil.copy2(source_file, output_folder)
+                copied_files.append(filename)
+    except Exception as e:
+        return 0, f"Error copying debug files: {str(e)}"
     
     if copied_files:
-        return len(copied_files), f"Copied: {', '.join(copied_files)}"
+        return len(copied_files), f"Copied {len(copied_files)} debug files"
     else:
         return 0, "No debug files found to copy"
 
