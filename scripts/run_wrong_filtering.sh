@@ -1,0 +1,4 @@
+RESULTS_FILE=results/qwen25vl_RegionFocus_72b.json
+OUTPUT_RESULTS_FILE=results/qwen25vl_RegionFocus_72b_filtered.json
+
+python keep_only_wrong_candidates.py --results_file $RESULTS_FILE --output_file $OUTPUT_RESULTS_FILE

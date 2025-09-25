@@ -1,0 +1,1 @@
+python summarize_results.py results_qwen25vl_72b/qwen25vl_RegionFocus.json

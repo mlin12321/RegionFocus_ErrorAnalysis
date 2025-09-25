@@ -2,7 +2,7 @@
 # Enhanced Web-based Error Image Viewer launcher with hover magnification
 
 # Get folder name from command line argument, default to "error_imgs"
-FOLDER_NAME=${1:-"error_imgs"}
+FOLDER_NAME=${1:-"error_imgs_qwen25vl_72b"}
 
 echo "🔍 Starting Enhanced Error Image Viewer (Web-based with Hover Magnification)..."
 echo "📁 Using folder: $FOLDER_NAME"

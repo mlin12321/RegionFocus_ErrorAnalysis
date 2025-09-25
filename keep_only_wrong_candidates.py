@@ -1,5 +1,6 @@
 import json
 import os
+import argparse
 
 def read_results_metadata(file_path):
     filtered_results = {}
@@ -14,11 +15,15 @@ def read_results_metadata(file_path):
     return filtered_results
 
 
-def main():
-    filtered_results = read_results_metadata('results/qwen25vl_RegionFocus_7b.json')
-    with open('results/qwen25vl_RegionFocus_7b_filtered.json', 'w') as f:
+def main(results_file, output_file):
+    filtered_results = read_results_metadata(results_file) #read_results_metadata('results/qwen25vl_RegionFocus_7b.json')
+    with open(output_file, 'w') as f:
         json.dump(filtered_results, f, indent=4)
     
 
 if __name__ == "__main__":
-    main()
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--results_file', type=str, required=True)
+    parser.add_argument('--output_file', type=str, required=True)
+    args = parser.parse_args()
+    main(args.results_file, args.output_file)

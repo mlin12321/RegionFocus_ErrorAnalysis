@@ -1,0 +1,1 @@
+python visualize_predictions.py --json_path results/qwen25vl_RegionFocus_72b_filtered.json --output_dir error_imgs_qwen25vl_72b --base_path . --debug_path debug_qwen25vl_72b
