@@ -146,21 +146,38 @@ def create_annotation_svg(annotation_metadata, display_width, display_height, or
 def create_magnifying_glass_html(image_base64, image_width, image_height, annotation_metadata=None):
     """Create HTML with magnifying glass effect"""
     
-    # Scale down image for display if too large
-    display_width = min(800, image_width)
-    display_height = int(image_height * (display_width / image_width))
+    # Calculate display size to fit within container while maintaining aspect ratio
+    max_width = 900  # Maximum width for the viewer
+    max_height = 600  # Maximum height for the viewer
+    
+    # Calculate scaling to fit within both width and height constraints
+    width_scale = max_width / image_width
+    height_scale = max_height / image_height
+    scale = min(width_scale, height_scale, 1.0)  # Don't upscale, only downscale
+    
+    display_width = int(image_width * scale)
+    display_height = int(image_height * scale)
     
     # Generate SVG overlay for annotations
     annotation_svg = create_annotation_svg(annotation_metadata, display_width, display_height, image_width, image_height)
     
     html_code = f"""
-    <div id="image-container" style="position: relative; display: inline-block; border: 2px solid #ddd; border-radius: 8px; overflow: visible;">
-        <img id="main-image" 
-             src="data:image/png;base64,{image_base64}" 
-             style="width: {display_width}px; height: {display_height}px; display: block;"
-             onmousemove="showMagnifier(event)"
-             onmouseenter="showMagnifier(event)"
-             onmouseleave="hideMagnifier()">
+    <div id="scrollable-container" style="
+        max-width: 100%; 
+        max-height: 650px; 
+        overflow: auto; 
+        border: 2px solid #ddd; 
+        border-radius: 8px; 
+        background: #f8f9fa;
+        padding: 10px;
+    ">
+        <div id="image-container" style="position: relative; display: inline-block; overflow: visible;">
+            <img id="main-image" 
+                 src="data:image/png;base64,{image_base64}" 
+                 style="width: {display_width}px; height: {display_height}px; display: block;"
+                 onmousemove="showMagnifier(event)"
+                 onmouseenter="showMagnifier(event)"
+                 onmouseleave="hideMagnifier()">
         
         <!-- SVG overlay for annotations that can flash independently -->
         <svg id="annotation-overlay" style="
@@ -186,6 +203,7 @@ def create_magnifying_glass_html(image_base64, image_width, image_height, annota
             z-index: 1000;
             box-shadow: 0 0 30px rgba(0,255,0,0.7);
         "></div>
+        </div>
     </div>
     
     <!-- Controls -->
@@ -462,18 +480,29 @@ def main():
                 annotation_metadata = load_annotation_metadata(current_folder)
                 
                 if image_base64:
+                    # Calculate display scaling info
+                    max_width = 900
+                    max_height = 600
+                    width_scale = max_width / image.width
+                    height_scale = max_height / image.height
+                    scale = min(width_scale, height_scale, 1.0)
+                    display_width = int(image.width * scale)
+                    display_height = int(image.height * scale)
+                    
                     # Create magnifying glass HTML with annotation metadata
                     magnifier_html = create_magnifying_glass_html(
                         image_base64, image.width, image.height, annotation_metadata
                     )
                     
-                    # Display the interactive image
-                    st.components.v1.html(magnifier_html, height=600)
+                    # Display the interactive image with increased height for scrollable container
+                    st.components.v1.html(magnifier_html, height=800)
                     
                     # Instructions
                     st.info("""
                     🔍 **Enhanced Magnification Instructions:**
                     - **Hover** over the image to see magnified view (circular magnifier)
+                    - **Scrolling**: If image is large, scroll horizontally/vertically within the frame
+                    - **Auto-fit**: Images are automatically scaled to fit the viewer while maintaining aspect ratio
                     - **Zoom controls**: Use +/- buttons or keyboard shortcuts
                     - **Flash highlights**: Click 🔆 button to make ONLY prediction points and annotation boxes flash
                     - **Selective flashing**: Only bright annotation colors flash, background image stays normal
@@ -485,7 +514,8 @@ def main():
                     """)
                     
                     # Image info
-                    st.caption(f"Original image size: {image.width} x {image.height} pixels")
+                    scale_percent = int(scale * 100)
+                    st.caption(f"Original image size: {image.width} x {image.height} pixels | Display size: {display_width} x {display_height} pixels ({scale_percent}% scale)")
                 
             except Exception as e:
                 st.error(f"Error loading image: {e}")
@@ -521,6 +551,8 @@ def main():
     st.sidebar.markdown("---")
     st.sidebar.markdown("""
     ### 🔍 Enhanced Features
+    - **Auto-fit**: Images scaled to fit viewer frame
+    - **Scrollable**: Horizontal/vertical scrolling for overflow
     - **Hover Zoom**: Move mouse over image
     - **Adjustable**: 50% to 500% zoom
     - **Default**: 400% magnification
