@@ -1,0 +1,19 @@
+#    !/bin/bash
+set -e
+
+models=("qwen3vl_RegionFocus_30b")
+for model in "${models[@]}"
+do
+    python eval_screenspot_pro_RegionFocus.py  \
+        --model_type ${model}  \
+        --screenspot_imgs "./images"  \
+        --screenspot_test "./annotations"  \
+        --task "all" \
+        --language "en" \
+        --gt_type "positive" \
+        --log_path "./results_qwen25vl_72b/${model}.json" \
+        --checkpoint_path "./results_mid/${model}.json" \
+        --inst_style "instruction" \
+        --debug
+
+done

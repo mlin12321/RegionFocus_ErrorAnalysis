@@ -56,6 +56,10 @@ def build_model(args):
         from models.qwen25vl_RegionFocus_7b import Qwen25VLModel
         model = Qwen25VLModel()
         model.load_model()
+    elif model_type == "qwen3vl_RegionFocus_30b":
+        from models.qwen3vl_RegionFocus_30b import Qwen3VLModel
+        model = Qwen3VLModel()
+        model.load_model()
     else:
         raise ValueError(f"Unsupported model type {model_type}.")
     model.set_generation_config(temperature=0, max_new_tokens=256)
