@@ -14,8 +14,8 @@ do
     
     python eval_screenspot_pro_RegionFocus.py  \
         --model_type ${model}  \
-        --screenspot_imgs "./images"  \
-        --screenspot_test "./annotations"  \
+        --screenspot_imgs "../ScreenSpot-Pro/images"  \
+        --screenspot_test "../ScreenSpot-Pro/annotations"  \
         --task "all" \
         --language "en" \
         --gt_type "positive" \
