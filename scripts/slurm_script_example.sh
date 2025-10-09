@@ -1,0 +1,1 @@
+sbatch --nodes=1 --gpus-per-node=1 run_slurm.sh

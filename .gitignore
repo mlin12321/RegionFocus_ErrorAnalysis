@@ -1,3 +1,6 @@
 *.png
 *.txt
-*.json 
+*.json
+__pycache__/
+*.pyc
+results*/
